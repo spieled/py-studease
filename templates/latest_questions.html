@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+    <div class="container masthead">
+        <div class="row">
+            <p>display the latest questions here! </p>
+            <ul class="">
+                {% for question in questions %}
+                    <li>
+                    {{ question.content }}
+                    {{ question.create_date|date:"Y-m-d H:m:s" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
