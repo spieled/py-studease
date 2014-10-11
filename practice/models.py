@@ -10,3 +10,12 @@ class Question(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Answer(models.Model):
+    content = models.CharField(max_length=500)
+    question = models.ForeignKey("Question")
+    right = models.BooleanField()
+
+    def __str__(self):
+        return self.content;

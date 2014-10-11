@@ -4,3 +4,4 @@ from practice import models
 
 
 admin.site.register(models.Question)
+admin.site.register(models.Answer)
