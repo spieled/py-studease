@@ -4,13 +4,14 @@
 
     <div class="container masthead">
         <div class="row">
+            <input type="hidden" id="questionId" value="{{ question.id }}">
             {{ question.content }}
             {{ question.create_date|date:"Y-m-d H:m:s"  }}
         </div>
         <div class="row">
                 {% for answer in answers %}
                         <div>
-                        <input type="radio" name="answer" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}">
+                        <input type="radio" name="answerId" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}">
                         <label class="pull-left" for="{{ answer.id }}">&emsp;{{ answer.content }}</label>
                         </div>
                         <div class="clearfix"></div>
@@ -27,14 +28,13 @@
     <script type="text/javascript">
         $(function() {
             $("#submitBtn").click(function() {
+                var questionId = $('INPUT[id=questionId]').val();
+                var answerId = $('INPUT[type=radio][name=answerId]:checked').val();
                 $.ajax({
-                    url: '',
-                    data: {
-                        questionId: questionId,
-                        answerId: answerId
-                    },
+                    url: '/practice/verify/' + questionId + '/' + answerId + '/',
                     success: function(responseText) {
-                        $.alert(responseText);
+                        console.log(responseText);
+                        alert(responseText.msg)
                     }
                 });
             });
