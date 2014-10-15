@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+    <div class="container masthead">
+        <div class="row">
+            {{ question.content }}
+            {{ question.create_date|date:"Y-m-d H:m:s"  }}
+        </div>
+        <div class="row">
+                {% for answer in answers %}
+                        <div>
+                        <input type="radio" name="answer" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}">
+                        <label class="pull-left" for="{{ answer.id }}">&emsp;{{ answer.content }}</label>
+                        </div>
+                        <div class="clearfix"></div>
+                {% endfor %}
+        </div>
+    <div class="row">
+        <input type="button" id="submitBtn" class="btn btn-primary" value="提交">
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function() {
+            $("#submitBtn").click(function() {
+                $.ajax({
+                    url: '',
+                    data: {
+                        questionId: questionId,
+                        answerId: answerId
+                    },
+                    success: function(responseText) {
+                        $.alert(responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

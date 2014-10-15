@@ -8,8 +8,10 @@
             <ul class="">
                 {% for question in questions %}
                     <li>
+                    <a href="/practice/practice/{{ question.pk }}/" target="_blank">
                     {{ question.content }}
                     {{ question.create_date|date:"Y-m-d H:m:s" }}
+                    </a>
                     </li>
                 {% endfor %}
             </ul>
