@@ -4,14 +4,13 @@
 
     <div class="container masthead">
         <div class="row">
-            <p>display the latest questions here! </p>
             <ul class="">
                 {% for question in questions %}
                     <li>
                     <a href="/practice/practice/{{ question.pk }}/" target="_blank">
                     {{ question.content }}
-                    {{ question.create_date|date:"Y-m-d H:m:s" }}
                     </a>
+                    {% comment %}{{ question.create_date|date:"Y-m-d H:m:s" }}{% endcomment %}
                     </li>
                 {% endfor %}
             </ul>
