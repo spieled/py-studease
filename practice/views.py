@@ -24,7 +24,7 @@ def verify(request, questionId, answerId):
 
     if answer.right and str(answer.question_id) == questionId:
         print("恭喜你，答对了")
-        return HttpResponse(json.dumps({'success': True, 'msg': '恭喜你，答对了！', 'correct_answers': [str(cn.pk) for cn in correct_answers]}), mimetype='json/application')
+        return HttpResponse(json.dumps({'success': True, 'msg': '恭喜你，答对了！', 'correct_answers': ",".join([str(cn.pk) for cn in correct_answers])}))
     else:
         print("很遗憾，你答错了")
-        return HttpResponse(json.dumps({'success': True, 'msg': '很遗憾，你答错了！', 'correct_answers': [str(cn.pk) for cn in correct_answers]}), mimetype='json/application')
+        return HttpResponse(json.dumps({'success': True, 'msg': '很遗憾，你答错了！', 'correct_answers': ",".join([str(cn.pk) for cn in correct_answers])}))
