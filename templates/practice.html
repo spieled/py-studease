@@ -5,17 +5,22 @@
 
     <div class="container masthead">
         <div class="row">
-            <input type="hidden" id="questionId" value="{{ question.id }}">
+            <input type="hidden" id="questionId" value="{{ question.id }}" multi-answer="{% if question.multi_answer %}true{% else %}false{% endif %}">
             <label>
             {{ question.content }}
             </label>
+            {% if question.multi_answer %}
+                <span class="">(多选)</span>
+            {% else %}
+                <span class="">(单选)</span>
+            {% endif %}
             {% comment %}{{ question.create_date|date:"Y-m-d H:m:s"  }}{% endcomment %}
 
         </div>
         <div class="row">
                 {% for answer in answers %}
                         <div>
-                        <input type="radio" name="answerId" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}" tag="{% cycle A,B,C,D %}">
+                        <input type="{% if question.multi_answer %}checkbox{% else %}radio{% endif %}" name="answerId" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}" tag="{% cycle A,B,C,D %}">
                         <label class="pull-left control-label" for="{{ answer.id }}">&emsp;{% cycle A,B,C,D %} &emsp; {{ answer.content }}</label>
                         </div>
                         <div class="clearfix"></div>
