@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
-from django.utils import simplejson
 from django.http import HttpResponse
 from practice.models import Question, Answer
+import json
 # Create your views here.
 
 
@@ -18,12 +18,13 @@ def practice(request, id):
 
 def verify(request, questionId, answerId):
     answer = Answer.objects.get(pk=answerId)
-    # question = answer.question.pk
-    print('questionId: ' + questionId)
-    print('answer.question.pk: ' + str(answer.question_id))
+
+    # 找到正确答案
+    correct_answers = Answer.objects.filter(question=answer.question, right=True)
+
     if answer.right and str(answer.question_id) == questionId:
         print("恭喜你，答对了")
-        return HttpResponse(simplejson.dumps({'success': True, 'msg': '恭喜你，答对了'}), mimetype='json/application')
+        return HttpResponse(json.dumps({'success': True, 'msg': '恭喜你，答对了！', 'correct_answers': [str(cn.pk) for cn in correct_answers]}), mimetype='json/application')
     else:
         print("很遗憾，你答错了")
-        return HttpResponse(simplejson.dumps({'success': True, 'msg': '很遗憾，你答错了'}), mimetype='json/application')
+        return HttpResponse(json.dumps({'success': True, 'msg': '很遗憾，你答错了！', 'correct_answers': [str(cn.pk) for cn in correct_answers]}), mimetype='json/application')

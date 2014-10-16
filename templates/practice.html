@@ -5,14 +5,17 @@
     <div class="container masthead">
         <div class="row">
             <input type="hidden" id="questionId" value="{{ question.id }}">
+            <label>
             {{ question.content }}
+            </label>
             {{ question.create_date|date:"Y-m-d H:m:s"  }}
+
         </div>
         <div class="row">
                 {% for answer in answers %}
                         <div>
-                        <input type="radio" name="answerId" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}">
-                        <label class="pull-left" for="{{ answer.id }}">&emsp;{{ answer.content }}</label>
+                        <input type="radio" name="answerId" class="radio pull-left" value="{{ answer.id }}" id="{{ answer.id }}" tag="{% cycle A,B,C,D %}">
+                        <label class="pull-left control-label" for="{{ answer.id }}">&emsp;{% cycle A,B,C,D %} &emsp; {{ answer.content }}</label>
                         </div>
                         <div class="clearfix"></div>
                 {% endfor %}
@@ -20,6 +23,14 @@
     <div class="row">
         <input type="button" id="submitBtn" class="btn btn-primary" value="提交">
     </div>
+    </div>
+
+    <div id="tipModel" class="modal fade col-lg-10" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <span id="tipText">hahahah</span>
+        </div>
+      </div>
     </div>
 
 {% endblock %}
@@ -33,8 +44,18 @@
                 $.ajax({
                     url: '/practice/verify/' + questionId + '/' + answerId + '/',
                     success: function(responseText) {
-                        console.log(responseText);
-                        alert(responseText.msg)
+                        var extra = '正确答案是：';
+                        correct_answers = responseText.correct_answers;
+                        $.each(correct_answers, function(index, item) {
+                            var tag = $('INPUT[type=radio][name=answerId][value='+item+']').attr("tag");
+                            if (index > 0) {
+                                tag = "," + tag;
+                            }
+                            extra += tag
+                        });
+                        // alert(responseText.msg + extra);
+                        $("#tipModel").find('SPAN[id=tipText]').text(responseText.msg + extra);
+                        $("#tipModel").modal();
                     }
                 });
             });
