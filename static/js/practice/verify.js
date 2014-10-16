@@ -5,11 +5,12 @@ $(function() {
                 $.ajax({
                     url: '/practice/verify/' + questionId + '/' + answerId + '/',
                     success: function(responseText) {
+                        var json = $.parseJSON(responseText);
                         var extra = '正确答案是：' ;
-                        var correct_answers = responseText.correct_answers || '';
+                        var correct_answers = json.correct_answers || '';
                         extra += correct_answers;
 
-                        $("#tipModel").find('SPAN[id=tipText]').text(responseText.msg + extra);
+                        $("#tipModel").find('SPAN[id=tipText]').text(json.msg + extra);
                         $("#tipModel").modal();
                     }
                 });
