@@ -1,7 +1,11 @@
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
+from practice import urls as practiceurls
+from pystudease import views
 admin.autodiscover()
+
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,8 +15,14 @@ urlpatterns = patterns('',
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'settings.STATIC_ROOT'}),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'practice.views.latest_questions'),
-    url(r'^practice/practice/(\d)+/$', 'practice.views.practice'),
-    url(r'^practice/verify/(\d)+/(\d)+/$', 'practice.views.verify'),
-    url(r'^practice/multi-verify/(\d)+/(.+)/$', 'practice.views.multi_verify'),
+    url(r'^$', views.index),
+    url(r'^practice/', include(practiceurls)),
 )
+
+
+from django.conf import settings
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )

@@ -1,0 +1,48 @@
+Django Debug Toolbar安装
+
+1.安装Django Debug Toolbar
+
+sudo pip install django-debug-toolbar
+2.添加到INSTALLED_APPS，添加
+
+ "debug_toolbar",
+3.添加下行到MIDDLEWARE_CLASSES，建议放到最后一行
+
+  'debug_toolbar.middleware.DebugToolbarMiddleware',
+4.INTERNAL_IPS设置,如果你和我一样已经放在服务器上了，就加上你的IP。
+
+  INTERNAL_IPS = ('127.0.0.1',)
+5.不自动调整设置
+
+ DEBUG_TOOLBAR_PATCH_SETTINGS = False
+6.添加到URLconf
+
+
+
+    from django.conf import settings
+    from django.conf.urls import include, patterns, url
+
+    if settings.DEBUG:
+        import debug_toolbar
+        urlpatterns += patterns('',
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        )
+
+7.自定义工具栏
+
+
+
+    DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    ]

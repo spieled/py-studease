@@ -7,13 +7,13 @@ import json
 
 def latest_questions(request):
     questions = Question.objects.order_by('create_date')
-    return render_to_response('latest_questions.html', locals())
+    return render_to_response('practice/latest_questions.html', locals())
 
 
 def practice(request, id):
     question = Question.objects.get(pk=id)
     answers = Answer.objects.filter(question=question)
-    return render_to_response('practice.html', locals())
+    return render_to_response('practice/practice.html', locals())
 
 
 def verify(request, questionId, answerId):
