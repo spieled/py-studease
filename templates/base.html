@@ -9,30 +9,6 @@
     {% block stylesheets %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
-    <style>
-    * {
-        font-size: 14px;
-    }
-     .form-box {
-        color: #f5f5f5;
-        width: 290px;
-        height: 330px;
-        position: absolute;
-        margin-right: -490px;
-        right: 50%;
-        overflow: hidden;
-        top: 90px;
-        z-index: 2;
-        background-color: rgba(51, 51, 51, 0.701961);
-     }
-
-    label, input, button, select, textarea {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-    }
-
-    </style>
     {% endblock %}
 
 
@@ -60,16 +36,16 @@
         <div class="container">
             <div class="col-lg-6">
                 <h1>Python Studease</h1>
-                  <p>用户模块</p>
-                  <p>在线练习模块</p>
-                  <p>博客模块</p>
-                  <p>笔记模块</p>
+                  <p>用户</p>
+                  <p>在线练习</p>
+                  <p>博客</p>
+                  <p>云笔记</p>
             </div>
             <div class="col-lg-6 form-box">
                 <form class="form-signin" role="form" style="color: #bfbfbf; padding-top: 20px;">
                     <h2 class="form-signin-heading">请登录</h2>
                     <input type="email" class="form-control" placeholder="邮箱" required="" autofocus="">
-                    <input type="password" class="form-control" placeholder="密码" required="">
+                    <input type="password" class="form-control mt20" placeholder="密码" required="">
                     <div class="checkbox">
                       <label>
                         <input type="checkbox" value="remember-me"> 记住账号
@@ -85,13 +61,16 @@
 
         <div class="container" style="margin-top: 40px;margin-bottom: 40px;">
             <div class="col-lg-4">
-                <a href="/practice/"><img src="{% static 'image/practice.png' %}"></a>
+                <h1 class="page-header">在线练习</h1>
+                <a href="/practice/"><img class="col-lg-12" src="{% static 'image/practice1.jpg' %}" alt="在线练习" title="在线练习"></a>
             </div>
             <div class="col-lg-4">
-                <a href="/blog/"><img src="{% static 'image/practice.png' %}"></a>
+                <h1 class="page-header">博客</h1>
+                <a href="/blog/"><img class="col-lg-12" src="{% static 'image/blog1.jpg' %}" alt="博客" title="博客"></a>
             </div>
             <div class="col-lg-4">
-                <a href="/note/"><img src="{% static 'image/practice.png' %}"></a>
+                <h1 class="page-header">云笔记</h1>
+                <a href="/note/"><img src="{% static 'image/note1.jpg' %}" alt="云笔记" title="云笔记"></a>
             </div>
         </div>
 
