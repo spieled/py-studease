@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 from practice import urls as practiceurls
+from user import urls as userurls
 from pystudease import views
 admin.autodiscover()
 
@@ -19,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^blog/$', views.index),
     url(r'^note/$', views.index),
     url(r'^practice/', include(practiceurls)),
+    url(r'^user/', include(userurls))
 )
 
 
