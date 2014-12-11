@@ -1,3 +1,8 @@
+define('bootstrap/3.2.0/bootstrap', ['$'], function (require, exports, module) {
+
+    // 依赖的jQuery
+    var jQuery = require("$");
+
 /*!
  * Bootstrap v3.2.0 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
@@ -2178,3 +2183,6 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
   })
 
 }(jQuery);
+    // 把jQuery输出回去
+    module.exports = jQuery;
+});

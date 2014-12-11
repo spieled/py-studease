@@ -1,4 +1,7 @@
-$(function() {
+seajs.use(['widget', '$', 'bootstrap'], function (Widget, $) {
+    $(function() {
+
+        Widget.autoRenderAll();
 
             function handleRadio(questionId) {
                 var answerId = $('INPUT[type=radio][name=answerId]:checked').val();
@@ -68,3 +71,4 @@ $(function() {
             });
 
         });
+});
