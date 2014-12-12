@@ -104,8 +104,8 @@ seajs.config({
     alias: {
 
         // jQuery
-        "$": "gallery/jquery/1.10.2/jquery",
-        "jquery": "gallery/jquery/1.10.2/jquery",
+        "$": "gallery/jquery/1.7.2/jquery",
+        "jquery": "gallery/jquery/1.7.2/jquery",
 
 
         // jQuery的插件系列

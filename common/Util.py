@@ -275,8 +275,8 @@ def json_response(success=True, msg=None):
     from django.http import HttpResponse
     import json
     if not msg is None:
-        return HttpResponse(json.dumps({'success': success, 'msg': msg}))
-    return HttpResponse(json.dumps({'success': success}))
+        return HttpResponse(json.dumps({'success': success, 'msg': msg}), content_type='application/json')
+    return HttpResponse(json.dumps({'success': success}), content_type='application/json')
 
 
 # def json(msg=None):
