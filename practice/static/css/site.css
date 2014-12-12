@@ -42,3 +42,7 @@ label, input, button, select, textarea {
 .mt20 {
     margin-top: 20px;
 }
+
+.text-error {
+    color: red;
+}

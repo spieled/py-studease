@@ -42,13 +42,16 @@ def register(request):
         return Util.json_response(False, '密码不能为空')
     if not password_confirm:
         return Util.json_response(False, '确认密码不能为空')
-    if not email:
-        return Util.json_response(False, '邮箱不能为空')
+    # if not email:
+    #     return Util.json_response(False, '邮箱不能为空')
 
     if not Util.equals(password, password_confirm):
         return Util.json_response(False, '密码也确认密码不一致')
 
-    user = User.objects.create_user(username=username, email=email, password=password)
+    try:
+        user = User.objects.create_user(username=username, email=email, password=password)
+    except Exception as e:
+        return Util.json_response(False, "用户名"+username+"已经注册了")
     user.is_active = True
     user.save
     return Util.json_response(True)

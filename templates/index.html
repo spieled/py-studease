@@ -1,12 +1,37 @@
 {% extends 'base.html' %}
 
+{% comment %}{% block main %}
+<div id="rootDiv" style="margin-top: 100px; margin-left: 50px;"></div>
+{% endblock main %}{% endcomment %}
+
 {% block scripts %}
 <script>
 seajs.use(['$', 'bootstrap', '$.form', '$.dialog'], function($) {
     $(function() {
 
-        var siginForm = $('#form-signin');
+        var siginForm = $('#form-signin'), registerForm = $('#form-register');
 
+
+        function showSigninForm() {
+            $(siginForm).removeClass("hide");
+            $(registerForm).addClass("hide");
+        }
+
+        function showRegisterForm() {
+            $(registerForm).removeClass("hide");
+            $(siginForm).addClass("hide");
+        }
+
+        // 确认展示登录表单
+        showSigninForm();
+
+        $('A[ID="registerBtn"]').click(function() {
+            showRegisterForm();
+        });
+
+        $('A[ID="signinBtn"]').click(function() {
+            showSigninForm();
+        });
 
         $(siginForm).on('submit', function(e) {
             e.preventDefault();
@@ -14,15 +39,47 @@ seajs.use(['$', 'bootstrap', '$.form', '$.dialog'], function($) {
                 if (responseText.success) {
                         // 登录成功后的跳转逻辑
                         console.log('处理登录成功后的跳转逻辑');
-                        $.alert('恭喜你登录成功');
                     } else {
-                        $('#error').text(responseText.msg);
-                        $.alert(responseText.msg);
+                        $('#siginError').text(responseText.msg);
                     }
             });
-
             return false;
         });
+
+        $(registerForm).on('submit', function(e) {
+            e.preventDefault();
+            $(registerForm).ajaxSubmit(function(responseText) {
+                if (responseText.success) {
+                    // 注册成功后的跳转逻辑
+                    console.log('处理注册成功后的跳转逻辑');
+                } else {
+                    $('#registerError').text(responseText.msg);
+                }
+            });
+            return false;
+        });
+
+
+        {% comment %}var list =  [
+                    {"parent": "#", "id": 1, "text": "李卫华"},
+                    {"parent": 1, "id": 2, "text": "王晓娜"},
+                    {"parent": 1, "id": 3, "text": "瓦岗寨"},
+                    {"parent": 2, "id": 4, "text": "大师傅"},
+                    {"parent": 4, "id": 5, "text": "圣达菲"},
+                    {"parent": 3, "id": 6, "text": "三生蕊"}
+                ];
+        $.each(list, function(index, item) {
+            console.log(item);
+            var parent = item.parent;
+            var id = item.id;
+            var text = item.text;
+            if (parent == "#") {
+                $('#rootDiv').append('<div id="'+id+'">'+text+'</div>');
+            } else {
+                $('#'+parent).append('<div id="'+id+'">'+text+'</div>');
+            }
+        });{% endcomment %}
+
     });
 });
 </script>
