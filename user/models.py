@@ -12,4 +12,5 @@ class Profile(models.Model):
     gender = models.BooleanField(default=True)
     address = models.CharField(max_length=200, default="")
     phone = models.CharField(max_length=200, default="")
+    avatar = models.FileField(upload_to="files")
 
