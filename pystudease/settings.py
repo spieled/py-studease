@@ -55,6 +55,8 @@ MIDDLEWARE_CLASSES = (
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
+AUTH_PROFILE_MODEL = "user.models.Profile"
+
 ROOT_URLCONF = 'pystudease.urls'
 
 WSGI_APPLICATION = 'pystudease.wsgi.application'
