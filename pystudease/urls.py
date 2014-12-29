@@ -1,9 +1,13 @@
-from django.conf.urls import patterns, include, url
+import os
 
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
 from practice import urls as practiceurls
 from user import urls as userurls
 from pystudease import views
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 admin.autodiscover()
 
 
@@ -14,6 +18,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'settings.STATIC_ROOT'}),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index),
