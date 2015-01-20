@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/alice.css' %}">
+    <link rel="stylesheet" href="{% static 'css/yunti.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    <div class="container mt70">
+        <form class="ui-form" id="contactForm" action="" method="POST" data-widget="validator">
+            <div class="ui-form-item">
+                <label class="ui-label" for="subject"><span class="ui-form-required">*</span> 主题</label>
+                <input type="text" class="ui-input" name="subject" id="subject" required="required"
+                       value="{% if form.subject.value %}{{ form.subject.value }}{% endif %}">
+
+                <div class="ui-form-explain">主题<span class="ui-form-required"> {{ form.subject.errors }}</span></div>
+            </div>
+            <div class="ui-form-item">
+                <label class="ui-label" for="email"><span class="ui-form-required">*</span> 邮箱</label>
+                <input type="email" class="ui-input" name="email" id="email" required="required"
+                       value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
+
+                <div class="ui-form-explain">邮箱<span class="ui-form-required"> {{ form.email.errors }}</span></div>
+            </div>
+            <div class="ui-form-item">
+                <label class="ui-label" for="message"><span class="ui-form-required">*</span> 内容</label>
+                <textarea class="ui-textarea" name="message" id="message" required="required">
+                    {% if form.message.value %}{{ form.message.value }}{% endif %}</textarea>
+
+                <div class="ui-form-explain">内容<span class="ui-form-required"> {{ form.message.errors }}</span></div>
+            </div>
+            <div class="ui-form-item">
+                <input type="submit" class="ui-button ui-button-morange" value="提交">
+                <input type="reset" class="ui-button ui-button-mwhite" value="取消">
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
