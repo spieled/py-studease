@@ -10,7 +10,7 @@
 {% block main %}
 
     <div class="container mt70">
-        <form class="ui-form" id="contactForm" action="" method="POST" data-widget="validator">
+        {% comment %}<form class="ui-form" id="contactForm" action="" method="POST" data-widget="validator">
             <div class="ui-form-item">
                 <label class="ui-label" for="subject"><span class="ui-form-required">*</span> 主题</label>
                 <input type="text" class="ui-input" name="subject" id="subject" required="required"
@@ -32,6 +32,15 @@
 
                 <div class="ui-form-explain">内容<span class="ui-form-required"> {{ form.message.errors }}</span></div>
             </div>
+            <div class="ui-form-item">
+                <input type="submit" class="ui-button ui-button-morange" value="提交">
+                <input type="reset" class="ui-button ui-button-mwhite" value="取消">
+            </div>
+        </form>{% endcomment %}
+
+        <form class="ui-form" id="contactForm" action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_div }}
             <div class="ui-form-item">
                 <input type="submit" class="ui-button ui-button-morange" value="提交">
                 <input type="reset" class="ui-button ui-button-mwhite" value="取消">
