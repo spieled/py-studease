@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/alice.css' %}">
+    <link rel="stylesheet" href="{% static 'css/yunti.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    <div class="container mt70">
+        {% if blog %}
+            <h2 style="text-align:center; font-size:20px; font-weight:bold;">{{ blog.title }}</h2>
+            <div class="m5 px12 gray" style="text-align: right;">
+                关键字：{{ blog.keyword }}&emsp;发布于&nbsp;{{ blog.createDate|date:'Y-m-d H:m:s' }}
+            </div>
+            <div class="pb10 px16">{{ blog.content }}</div>
+        {% endif %}
+    </div>
+
+{% endblock %}

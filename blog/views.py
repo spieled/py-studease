@@ -1,14 +1,49 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
-from blog.forms import ContactForm
+from blog.forms import ContactForm, BlogForm
+from blog.models import *
+from datetime import datetime
 
 
 # Create your views here.
 
 
 def index(request):
-    return render_to_response("blog/index.html")
+    blogs = Blog.objects.order_by('createDate')
+    return render_to_response("blog/index.html", {'blogs': blogs})
+
+
+@login_required()
+def add_blog(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            print('blog form is valid')
+            cd = form.cleaned_data
+            title = cd['title']
+            keyword = cd['keyword']
+            content = cd['content']
+            blog = Blog(title=title, keyword=keyword, content=content)
+            blog.author = request.user
+            blog.createDate = datetime.now()
+            blog.save()
+            return HttpResponseRedirect('/blog')
+    else:
+        form = BlogForm()
+
+    return render(request, 'blog/add_blog.html', {'form': form})
+
+
+def view_blog(request, pk):
+    """
+    filter得到的是数组; get得到的才是一个对象
+    """
+    print('pk: ', str(pk))
+    blog = Blog.objects.get(pk=int(pk))
+    print('blog: ', blog)
+    return render_to_response('blog/blog_detail.html', {'blog': blog})
 
 
 def info(request):

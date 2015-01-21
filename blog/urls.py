@@ -14,4 +14,6 @@ urlpatterns = patterns('',
                        url(r'^info/$', views.info),
                        url(r'^info2/$', views.info2),
                        url(r'^contact/$', views.contact),
+                       url(r'^add/$', views.add_blog),
+                       url(r'^detail/(.+)/$', views.view_blog),
 )

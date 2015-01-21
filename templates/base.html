@@ -51,6 +51,7 @@
                 <div class="col-lg-6 form-box">
                     <form id="form-signin" class="form-signin" action="/user/login/" method="POST"
                           style="color: #bfbfbf;">
+                        {% csrf_token %}
                         <h2 class="form-signin-heading">请登录</h2>
                         <input type="input" class="form-control" name="username" placeholder="用户名" required=""
                                autofocus="">
@@ -69,6 +70,7 @@
                     </form>
                     <form id="form-register" class="form-signin hide" action="/user/register/" method="POST"
                           style="color: #bfbfbf;">
+                        {% csrf_token %}
                         <h2 class="form-signin-heading">请注册</h2>
                         <input type="input" class="form-control" name="username" placeholder="用户名" required=""
                                autofocus="">

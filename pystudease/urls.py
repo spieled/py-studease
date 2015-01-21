@@ -2,8 +2,9 @@ import os
 
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
-from pystudease import views
+from pystudease import views, settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 admin.autodiscover()
@@ -17,13 +18,17 @@ urlpatterns = patterns('',
                            {'document_root': settings.STATIC_ROOT}),
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
                            {'document_root': settings.MEDIA_ROOT}),
+                       url(r'^about/$', TemplateView.as_view(template_name='about.html')),
+
 
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^$', views.index),
                        url(r'^blog/', include('blog.urls')),
                        url(r'^note/$', views.index),
                        url(r'^practice/', include('practice.urls')),
-                       url(r'^user/', include('user.urls'))
+                       url(r'^accounts/', include('user.urls')),
+
+
 )
 
 from django.conf import settings

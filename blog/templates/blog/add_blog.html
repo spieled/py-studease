@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/alice.css' %}">
+    <link rel="stylesheet" href="{% static 'css/yunti.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    <div class="container mt70">
+        <form class="ui-form" action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="ui-form-item">
+                <input type="submit" class="ui-button ui-button-morange" value="确定">
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -4,6 +4,13 @@
     <title></title>
 </head>
 <body>
-blog index page
+<div class="container">
+    <a href="/blog/add" class="ui-button ui-button-mblue">创建博客</a>
+</div>
+{% if blogs %}
+    {% for blog in blogs %}
+        <li><a href="/blog/detail/{{ blog.pk }}" target="_blank">{{ forloop.counter }}、{{ blog.title }}</a></li>
+    {% endfor %}
+{% endif %}
 </body>
 </html>
