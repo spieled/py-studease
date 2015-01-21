@@ -12,5 +12,22 @@
         <li><a href="/blog/detail/{{ blog.pk }}" target="_blank">{{ forloop.counter }}、{{ blog.title }}</a></li>
     {% endfor %}
 {% endif %}
+
+<div class="pagination">
+        <span class="step-link">
+            {% if blogs.has_previous %}
+                <a href="?page={{ blogs.previous_page_number }}">pre</a>
+            {% endif %}
+
+            <span class="current">
+                page {{ blogs.number }} of {{ blog.paginator.num_pages }}
+            </span>
+
+            {% if blogs.has_next %}
+                <a href="?page={{ blogs.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+</div>
+
 </body>
 </html>

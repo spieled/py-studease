@@ -7,6 +7,10 @@ import json
 # Create your views here.
 
 
+def profile(request):
+    return HttpResponse('profile')
+
+
 def login(request):
     """
     登录逻辑

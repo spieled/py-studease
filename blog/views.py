@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from blog.forms import ContactForm, BlogForm
 from blog.models import *
@@ -12,6 +13,16 @@ from datetime import datetime
 
 def index(request):
     blogs = Blog.objects.order_by('createDate')
+    paginator = Paginator(blogs, 2)
+    page = request.GET.get('page')
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger as e1:
+        print(str(page), ' is not an integer', e1)
+        blogs = paginator.page(1)
+    except EmptyPage:
+        print(page, ' out of index')
+        blogs = paginator.page(paginator.num_pages)
     return render_to_response("blog/index.html", {'blogs': blogs})
 
 
