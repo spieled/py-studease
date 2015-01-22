@@ -23,3 +23,10 @@ class BlogForm(forms.Form):
                               error_messages={'required': '关键字不能为空', 'max_length': '关键字长度最多40个字符'})
     content = forms.CharField(widget=forms.Textarea, label='内容', max_length=2000,
                               error_messages={'required': '内容不能为空', 'max_length': '内容长度最多40个字符'})
+
+
+class CommentForm(forms.Form):
+    error_class = 'ui-form-required'
+
+    content = forms.CharField(label='评论', max_length=400,
+                              error_messages={'required': '评论内容不能为空', 'max_length': '评论内容长度最多400个字符'})

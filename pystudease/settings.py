@@ -95,6 +95,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+APPEND_SLASH = True
+
 # DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 # INTERNAL_IPS = ('127.0.0.1',)

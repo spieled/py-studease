@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from blog.forms import ContactForm, BlogForm
+from blog.forms import ContactForm, BlogForm, CommentForm
 from blog.models import *
 from datetime import datetime
 
@@ -49,12 +49,37 @@ def add_blog(request):
 
 def view_blog(request, pk):
     """
-    filter得到的是数组; get得到的才是一个对象
+    1、filter得到的是数组; get得到的才是一个对象;
+    2、When rendering a template RequestContext, the currently logged-in user,
+    either a User instance or an AnonymousUser instance, is stored in the template variable {{ user }}
+    3、所以说，在有用户的工程项目中请尽量使用render，而不是render_to_response
     """
     print('pk: ', str(pk))
     blog = Blog.objects.get(pk=int(pk))
     print('blog: ', blog)
-    return render_to_response('blog/blog_detail.html', {'blog': blog})
+    comments = Comment.objects.order_by('createDate')
+    return render(request, 'blog/blog_detail.html', {'blog': blog, 'form': CommentForm(), 'comments': comments})
+
+
+@login_required()
+def comment_blog(request, pk):
+    blog = Blog.objects.get(pk=int(pk))
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            content = cd['content']
+            comment = Comment(content=content)
+            comment.author = request.user
+            comment.blog = blog
+            now = datetime.now()
+            print('now: ', str(now))
+            comment.createDate = now
+            comment.save()
+            return HttpResponseRedirect('/blog/detail/' + pk + '/')
+    else:
+        form = CommentForm()
+    return render(request, 'blog/blog_detail.html', {'blog': blog, 'form': form})
 
 
 def info(request):

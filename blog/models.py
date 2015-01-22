@@ -14,3 +14,13 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    blog = models.ForeignKey(to=Blog)
+    author = models.ForeignKey(User)
+    content = models.CharField(max_length=400)
+    createDate = models.DateTimeField()
+
+    def __str__(self):
+        return self.content
