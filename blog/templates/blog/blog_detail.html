@@ -13,7 +13,7 @@
         {% if blog %}
             <h2 style="text-align:center; font-size:20px; font-weight:bold;">{{ blog.title }}</h2>
             <div class="mb5 mt5 px12 gray" style="text-align: right;">
-            关键字：{{ blog.keyword }}&emsp;发布于&nbsp;{{ blog.createDate|date:'Y-m-d H:i:s' }}
+                关键字：{{ blog.keyword }}&emsp;发布于&nbsp;{{ blog.createDate|date:'Y-m-d H:i:s' }}
             </div>
             <div class="pb10 px16">{{ blog.content }}</div>
         {% endif %}
@@ -29,13 +29,15 @@
             </div>
         {% endfor %}
         {% if user.is_authenticated %}
-            <form id="commentForm" class="ui-form mt20" action="/blog/{{ blog.pk }}/comment/" method="POST">
-            {% csrf_token %}
-                {{ form.as_p }}
-                <div class="ui-form-item">
-                    <input type="submit" class="ui-button ui-button-morange" value="评论">
-                </div>
-            </form>
+            {% if 'blog.add_comment' in perms %}
+                <form id="commentForm" class="ui-form mt20" action="/blog/{{ blog.pk }}/comment/" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="ui-form-item">
+                        <input type="submit" class="ui-button ui-button-morange" value="评论">
+                    </div>
+                </form>
+            {% endif %}
         {% else %}
             please login to add comment
         {% endif %}

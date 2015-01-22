@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for pystudease project.
 
@@ -55,6 +56,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 AUTH_PROFILE_MODEL = "user.models.Profile"
@@ -81,6 +84,41 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+# CACHES = {
+#     'default': {
+#         # 需要 pip install python-memcached
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '10.0.0.212:11211',
+#         'TIMEOUT': 300, # default 300 seconds, as 5 minutes
+#     }
+# }
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'blog': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

@@ -2,13 +2,17 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+# from django.views.decorators.cache import cache_page
 
 from blog.forms import ContactForm, BlogForm, CommentForm
 from blog.models import *
 from datetime import datetime
+import logging
 
 
 # Create your views here.
+
+logger = logging.getLogger('blog')
 
 
 def index(request):
@@ -54,9 +58,13 @@ def view_blog(request, pk):
     either a User instance or an AnonymousUser instance, is stored in the template variable {{ user }}
     3、所以说，在有用户的工程项目中请尽量使用render，而不是render_to_response
     """
+    logger.error(__name__)
+    logger.error('Something went wrong')
     print('pk: ', str(pk))
+    logger.info('pk is ' + str(pk))
     blog = Blog.objects.get(pk=int(pk))
     print('blog: ', blog)
+    logger.info('blog: ' + str(blog))
     comments = Comment.objects.order_by('createDate')
     return render(request, 'blog/blog_detail.html', {'blog': blog, 'form': CommentForm(), 'comments': comments})
 
