@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>meta</title>
+</head>
+<body>
+
+你的IP：
+{% for ip in meta.remote_addr %}
+    {% if forloop.counter0 > 0 %}
+        ==>>
+    {% endif %}
+    {{ ip }}
+{% endfor %}
+；
+操作系统：{{ meta.os }}；
+分辨率：
+<script>document.write(window.screen.width + "*" + window.screen.height)</script>
+语言：{{ meta.language }}；
+浏览器: {{ meta.user_agent }}
+
+</body>
+</html>

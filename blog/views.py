@@ -103,7 +103,48 @@ def info2(request):
     # html = ""
     # for k, v in values:
     #     html.append((str(k), str(v)))
+    remote_addr = values['REMOTE_ADDR']
+    os = values['OS']
+    language = values['HTTP_ACCEPT_LANGUAGE']
+    user_agent = values['HTTP_USER_AGENT']
     return render_to_response('blog/meta.html', {'metas': values})
+
+
+def info3(request):
+    remote_addr = request.META['REMOTE_ADDR']
+    os = request.META['OS']
+    language = request.META['HTTP_ACCEPT_LANGUAGE']
+    user_agent = request.META['HTTP_USER_AGENT']
+    meta = {'os': os, 'remote_addr': remote_addr, 'language': language, 'user_agent': user_agent}
+    return render_to_response('blog/meta_tool.html', {'meta': meta})
+
+
+def getip_chinaz(ip):
+    URL = 'http://ip.chinaz.com/?IP=' + ip
+    import urllib.request
+    import re
+
+    conn = urllib.request.urlopen(URL, timeout=300)
+    result = conn.read().decode('utf-8')
+    ip = re.findall('查询结果\[\d*\]:(.+)</strong>', result)
+    if ip:
+        ip = ip[0]
+    ip = ip.split('==>>')
+    tu = (ip[0].strip(), ip[1].strip(), ip[2].strip())
+    return tu
+
+
+def info_tool(request):
+    """
+    发送请求到http://ip.chinaz.com获取返回内容，解析其中的请求主机的信息
+    """
+    remote_addr = request.META['REMOTE_ADDR']
+    os = request.META['OS']
+    language = request.META['HTTP_ACCEPT_LANGUAGE']
+    user_agent = request.META['HTTP_USER_AGENT']
+    meta = {'os': os, 'remote_addr': getip_chinaz(remote_addr), 'language': language, 'user_agent': user_agent}
+
+    return render_to_response('blog/meta_tool_chinaz.html', {'meta': meta})
 
 
 def contact(request):
@@ -127,3 +168,38 @@ def contact(request):
     form['email'].css_classes('ui-form-item')
     form['message'].css_classes('ui-form-item')
     return render(request, "blog/contact.html", {'form': form})
+
+
+def resolve_user_agent(user_agent):
+    """
+    解析浏览器信息
+    chrome: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36
+    ie: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+        兼容版本号 (操作系统 32位兼容子系统 )
+    firefox: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0
+            兼容版本号 (操作系统 32位兼容子系统 发行版本) Gecko内核版本号 浏览器名称和版本
+    """
+    return user_agent
+
+
+top_level_browser = []
+
+
+class Brower(object):
+    def __init__(self, manufacturer, parent, version_id, name, aliases, exclude, browser_type, rendering_engine,
+                 version_regex_string):
+        super.__init__()
+        self.manufacturer = manufacturer
+        self.parent = parent
+        self.children = []
+        self.aliases = aliases
+        self.exclude_list = exclude
+        self.browser_type = browser_type
+        self.rendering_engine = rendering_engine
+        if version_regex_string:
+            self.version_regex_string = version_regex_string
+        if parent:
+            top_level_browser.append(self)
+        else:
+            self.parent.add(self)
+
