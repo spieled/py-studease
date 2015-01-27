@@ -58,6 +58,7 @@ MIDDLEWARE_CLASSES = (
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
+    'common.exceptions.GlobalExceptionHandlerMiddleware',
 )
 
 AUTH_PROFILE_MODEL = "user.models.Profile"

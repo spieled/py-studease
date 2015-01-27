@@ -19,6 +19,8 @@ def index(request):
     blogs = Blog.objects.order_by('createDate')
     paginator = Paginator(blogs, 2)
     page = request.GET.get('page')
+    # if True:
+    #     raise RuntimeError('坑爹程序员手动抛出了一个异常')
     try:
         blogs = paginator.page(page)
     except PageNotAnInteger as e1:
@@ -168,38 +170,4 @@ def contact(request):
     form['email'].css_classes('ui-form-item')
     form['message'].css_classes('ui-form-item')
     return render(request, "blog/contact.html", {'form': form})
-
-
-def resolve_user_agent(user_agent):
-    """
-    解析浏览器信息
-    chrome: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36
-    ie: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
-        兼容版本号 (操作系统 32位兼容子系统 )
-    firefox: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0
-            兼容版本号 (操作系统 32位兼容子系统 发行版本) Gecko内核版本号 浏览器名称和版本
-    """
-    return user_agent
-
-
-top_level_browser = []
-
-
-class Brower(object):
-    def __init__(self, manufacturer, parent, version_id, name, aliases, exclude, browser_type, rendering_engine,
-                 version_regex_string):
-        super.__init__()
-        self.manufacturer = manufacturer
-        self.parent = parent
-        self.children = []
-        self.aliases = aliases
-        self.exclude_list = exclude
-        self.browser_type = browser_type
-        self.rendering_engine = rendering_engine
-        if version_regex_string:
-            self.version_regex_string = version_regex_string
-        if parent:
-            top_level_browser.append(self)
-        else:
-            self.parent.add(self)
 

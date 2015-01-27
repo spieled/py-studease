@@ -241,6 +241,7 @@ class OS(object):
             self.parent.children.append(self)
 
     def check_user_agent(self, user_agent_str):
+        print('name: ', self.name, '; user_agent_str: ', user_agent_str)
         if not user_agent_str:
             return None
         if not isinstance(user_agent_str, str):
@@ -251,7 +252,9 @@ class OS(object):
                 if target:
                     return target
         for aliase in self.aliases:
+            print('aliase: ', aliase)
             if user_agent_str.lower().__contains__(aliase.lower()):
+                print('找到匹配的OS：', self.name)
                 return self
         return None
 
@@ -338,8 +341,6 @@ OS('OTHER', None, 'unknown tablet', ['Tablet'])
 
 
 def check_browser(user_agent_str):
-    if not is_user_agent_string(user_agent_str):
-        return None
     for b in TOP_LEVEL_BROWSER:
         target = b.check_user_agent(user_agent_str)
         if target:
@@ -348,11 +349,10 @@ def check_browser(user_agent_str):
 
 
 def check_os(user_agent_str):
-    if not is_user_agent_string(user_agent_str):
-        return None
     for o in TOP_LEVEL_OS:
         target = o.check_user_agent(user_agent_str)
         if target:
+            print('找到匹配的操作系统：', target.name)
             return target
     return None
 
@@ -362,8 +362,12 @@ def check_user_agent(user_agent_str):
 
 
 if __name__ == '__main__':
-    user_agent_str = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
-    print(user_agent_str, ' is a valid user agent string ? ', is_user_agent_string(user_agent_str))
-    user_agent = check_user_agent(user_agent_str)
-    print('browser: ', user_agent)
-    print(user_agent[0].name, user_agent[1].name)
+    # user_agent_str = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+    # print(user_agent_str, ' is a valid user agent string ? ', is_user_agent_string(user_agent_str))
+    # user_agent = check_user_agent(user_agent_str)
+    # print('browser: ', user_agent)
+    # print(user_agent[0].name, user_agent[1].name)
+
+    os = check_os('Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko');
+    print('os: ', os)
+    print('osName: ', os.name)

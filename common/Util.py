@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __author__ = '刘少平'
 
 import calendar
@@ -278,6 +279,20 @@ def json_response(success=True, msg=None):
         return HttpResponse(json.dumps({'success': success, 'msg': msg}), content_type='application/json')
     return HttpResponse(json.dumps({'success': success}), content_type='application/json')
 
+
+def getip_chinaz(ip):
+    URL = 'http://ip.chinaz.com/?IP=' + ip
+    import urllib.request
+    import re
+
+    conn = urllib.request.urlopen(URL, timeout=300)
+    result = conn.read().decode('UTF-8')
+    ip = re.findall('查询结果\[\d*\]:(.+)</strong>', result)
+    if ip:
+        ip = ip[0]
+    ip = ip.split('==>>')
+    tu = (ip[0].strip(), ip[1].strip(), ip[2].strip())
+    return tu
 
 # def json(msg=None):
 #     from django.http import HttpResponse
