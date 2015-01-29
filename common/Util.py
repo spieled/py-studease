@@ -287,8 +287,18 @@ def getip_chinaz(ip):
 
     conn = urllib.request.urlopen(URL, timeout=300)
     try:
-        result = conn.read().decode('UTF-8')
+        response = conn.read()
+        # 如果返回数据是压缩了的，先解压，否则decode会报错
+        if response.startswith(b'\x1f\x8b'):
+            import gzip
+
+            response = gzip.decompress(response)
+        result = response.decode('UTF-8')
     except UnicodeDecodeError as e:
+        # 如果有异常发生，打印堆栈跟踪信息
+        import traceback
+
+        traceback.print_exc()
         return (ip, 0, '')
     ip = re.findall('查询结果\[\d*\]:(.+)</strong>', result)
     if ip:
@@ -358,5 +368,7 @@ if __name__ == '__main__':
     scost = timeit.timeit('"hello %s %s" % ("world", "good")', number=10000)
     print(formatcost)
     print(scost)
+
+    print(getip_chinaz('210.14.128.212'))
 
 
