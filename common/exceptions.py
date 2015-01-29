@@ -2,7 +2,7 @@
 __author__ = '刘少平'
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from common import useragent, Util
+from common import useragent, Util, emailUtil
 from datetime import datetime
 import traceback
 import sys
@@ -44,5 +44,7 @@ class GlobalExceptionHandlerMiddleware(object):
         error += "异常类型：" + exception.__class__.__name__ + BR
         error += "异常信息：" + str(exception) + BR
         error += "异常追踪信息：" + BR + BR.join(traceback.format_exception(*sys.exc_info())) + BR
+
+        emailUtil.send_mail_text(['472458220@qq.com'], 'Pystudease Error Report', error, sub_type='html')
 
         return HttpResponse("出现异常：" + BR + error)

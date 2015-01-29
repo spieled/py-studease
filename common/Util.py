@@ -286,7 +286,10 @@ def getip_chinaz(ip):
     import re
 
     conn = urllib.request.urlopen(URL, timeout=300)
-    result = conn.read().decode('UTF-8')
+    try:
+        result = conn.read().decode('UTF-8')
+    except UnicodeDecodeError as e:
+        return (ip, 0, '')
     ip = re.findall('查询结果\[\d*\]:(.+)</strong>', result)
     if ip:
         ip = ip[0]
